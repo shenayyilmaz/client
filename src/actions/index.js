@@ -1,4 +1,5 @@
 import streams from "../apis/streams";
+import history from "../history";
 
 import {
   SIGN_IN,
@@ -18,16 +19,23 @@ export const singOut = () => {
   return { type: SIGN_OUT };
 };
 
-export const createStream = (formValues) => async (dispatch) => {
+export const createStream = (formValues) => async (dispatch, getState) => {
+  //getState is function
+  const { userId } = getState().auth;
   //db.json to create new stream
-  const response = await streams.post("/streams", formValues);
+  const response = await streams.post("/streams", { ...formValues, userId });
   //redux store to create new stream
   dispatch({ type: CREATE_STREAM, payload: response.data });
+  console.log("history object", history);
+  history.push("/");
 };
 
 export const fetchStreams = () => async (dispatch) => {
   const response = await streams.get("streams");
+  console.log("response", response);
+
   dispatch({ type: "FETCH_STREAMS", payload: response.data });
+  history.push("/");
 };
 
 export const fetchStream = (id) => async (dispatch) => {

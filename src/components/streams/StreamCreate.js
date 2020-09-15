@@ -15,7 +15,7 @@ class StreamCreate extends React.Component {
     }
   };
 
-  renderInput = ({ input, label, meta }, formProps) => {
+  renderInput = ({ input, label, meta }) => {
     return (
       <div className="filed">
         <label>{label}</label>
@@ -62,4 +62,7 @@ const formWrapped = reduxForm({
   validate,
 })(StreamCreate);
 
-export default connect(null, { createStream })(formWrapped);
+const mapStateToProps = (state) => {
+  return { auth: state.auth };
+};
+export default connect(mapStateToProps, { createStream })(formWrapped);
