@@ -1,12 +1,6 @@
 import React from "react";
 // Router is plain router and we can pass our history object . we can accses in action creater
-import {
-  Router,
-  HashRouter,
-  MemoryRouter,
-  Route,
-  Link,
-} from "react-router-dom";
+import { Router, Switch, Route } from "react-router-dom";
 
 import StreamList from "./streams/StreamList";
 import StreamCreate from "./streams/StreamCreate";
@@ -23,13 +17,14 @@ const App = () => {
       <Router history={history}>
         <Header />
         {/* URLpath === '/' */}
-        <Route path="/" exact component={StreamList} />
-
-        {/* URLpath.contain('pageTwo') */}
-        <Route path="/streams/new" component={StreamCreate} />
-        <Route path="/streams/edit/:id" component={StreamEdit} />
-        <Route path="/streams/delete/:id" component={StreamDelete} />
-        <Route path="/streams/show" component={StreamShow} />
+        <Switch>
+          <Route path="/" exact component={StreamList} />
+          {/* URLpath.contain('pageTwo') */}
+          <Route path="/streams/new" component={StreamCreate} />
+          <Route path="/streams/edit/:id" component={StreamEdit} />
+          <Route path="/streams/delete/:id" component={StreamDelete} />
+          <Route path="/streams/:id" component={StreamShow} />
+        </Switch>
       </Router>
     </div>
   );
